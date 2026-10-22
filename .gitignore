@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.vs/
+*.user
+build/
+dist/
+installer_output/
+selftest_report.pdf
+.venv/
+venv/
+env/
