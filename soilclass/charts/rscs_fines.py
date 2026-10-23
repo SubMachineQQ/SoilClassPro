@@ -11,6 +11,7 @@ from ..classifiers.rscs import (PLASTICITY_NAMES, SENSITIVITY_NAMES,
                                 RSCSClassifier)
 from ..i18n import capitalize, t, translate_domain_text
 from ..models import SoilSample
+from .declutter import AROUND_POINT, keep_clear, movable, wrap_label
 from .style import COLORS, FONTS, apply_base_style
 
 PLASTICITY_EDGES = [30.0, 50.0, 75.0]
@@ -43,13 +44,17 @@ def _no_data_note(ax, sample: SoilSample) -> None:
 def _mark(ax, x: float, y: float, lines) -> None:
     ax.plot([x], [y], marker="*", ms=17, color=COLORS["sample"],
             mec="white", mew=1.2, zorder=12)
-    ax.annotate("\n".join(lines), (x, y), textcoords="offset points",
-                xytext=(14, 52), fontsize=FONTS["annotation"], fontweight="bold",
-                color=COLORS["sample"], zorder=13,
-                arrowprops=dict(arrowstyle="-", color=COLORS["sample"], lw=1.0,
-                                shrinkA=0, shrinkB=8),
-                bbox=dict(boxstyle="round,pad=0.32", fc="white",
-                          ec=COLORS["sample"], alpha=0.92, lw=0.9))
+    keep_clear(ax, x, y, 9.0)
+    label = ax.annotate("\n".join([wrap_label(lines[0])] + list(lines[1:])),
+                        (x, y), textcoords="offset points",
+                        xytext=(14, 52), fontsize=FONTS["annotation"],
+                        fontweight="bold", color=COLORS["sample"], zorder=13,
+                        linespacing=1.35, multialignment="left",
+                        arrowprops=dict(arrowstyle="-", color=COLORS["sample"],
+                                        lw=1.0, shrinkA=0, shrinkB=8),
+                        bbox=dict(boxstyle="round,pad=0.32", fc="white",
+                                  ec=COLORS["sample"], alpha=0.92, lw=0.9))
+    movable(label, [(14, 52, "left", "bottom")] + AROUND_POINT, priority=0)
 
 
 def rscs_fines_ratio_figure(sample: SoilSample,

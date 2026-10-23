@@ -11,6 +11,7 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
                                                NavigationToolbar2Tk)
 from matplotlib import pyplot as plt
 
+from ..charts.declutter import declutter
 from ..colors import CHART
 from ..i18n import t
 from ..models import SoilSample
@@ -108,6 +109,8 @@ class ChartTab(ttk.Frame):
         else:
             fig = self.builder(self._sample)
         self.canvas = FigureCanvasTkAgg(fig, master=self._chart_area)
+        self.canvas.mpl_connect("resize_event", lambda _e: self._declutter())
+        declutter(fig, self.canvas.get_renderer())
         self.canvas.draw()
         self.toolbar = _Toolbar(self.canvas, self._chart_area,
                                             pack_toolbar=False)
@@ -121,6 +124,13 @@ class ChartTab(ttk.Frame):
         if self._toolbar_extra is not None:
             self._toolbar_extra(self.toolbar)
         self.canvas.get_tk_widget().pack(side="top", fill="both", expand=True)
+
+    def _declutter(self) -> None:
+        canvas = getattr(self, "canvas", None)
+        if canvas is None:
+            return
+        declutter(canvas.figure, canvas.get_renderer())
+        canvas.draw_idle()
 
     def reset(self) -> None:
         self._sample = None

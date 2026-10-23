@@ -11,6 +11,8 @@ from ..classifiers.rscs import (APEX_FINES, CORNER_GRAVEL, CORNER_SAND,
                                 GROUP_POLYGONS, RSCSClassifier, to_xy)
 from ..i18n import t
 from ..models import ASTM_SIZES, SoilSample
+from .declutter import (FAR_AROUND, NUDGE, keep_clear, movable, ring,
+                        wrap_label)
 from .style import COLORS, FONTS, apply_base_style
 
 ZONE_KEYS = {
@@ -36,6 +38,14 @@ FLOW_SEGMENTS = [("Gc", 10), (10, 11), (11, 12), (12, 13), (13, "Sc")]
 _SQ3_2 = math.sqrt(3.0) / 2.0
 _TICK_LEN = 1.8
 _LABEL_OFF = 5.0
+_TICK_FONT = 10
+_POINT_FONT = 9.5
+_SMALL_ZONE = 120.0
+_ZONE_FAR = [
+    (dx, dy, "center", "center")
+    for dy in (-34, 34, -48, 48)
+    for dx in (0, -40, 40, -80, 80)
+]
 
 
 def _corner(key, mixtures):
@@ -76,8 +86,15 @@ def rscs_figure(sample: SoilSample, figsize=(8.4, 7.4)) -> Figure:
                                 edgecolor="none", zorder=1))
         cx = sum(p[0] for p in poly) / len(poly)
         cy = sum(p[1] for p in poly) / len(poly)
-        ax.text(cx, cy, name, ha="center", va="center", fontsize=FONTS["zone_label"],
-                fontweight="bold", color=COLORS["rscs_zone_label"], zorder=6)
+        small = _area(poly) < _SMALL_ZONE
+        label = ax.annotate(
+            name, (cx, cy), textcoords="offset points", xytext=(0, 0),
+            ha="center", va="center",
+            fontsize=FONTS["zone_label"] - (2 if small else 0),
+            fontweight="bold", color=COLORS["rscs_zone_label"], zorder=6,
+            arrowprops=dict(arrowstyle="-", color=COLORS["rscs_zone_label"],
+                            lw=0.7, shrinkA=2, shrinkB=0))
+        movable(label, NUDGE + _ZONE_FAR, priority=0)
 
     for i in range(1, 10):
         f = i * 10.0
@@ -104,9 +121,11 @@ def rscs_figure(sample: SoilSample, figsize=(8.4, 7.4)) -> Figure:
         x, y = to_xy(*mixtures[i])
         ax.plot([x], [y], "o", ms=4.5, mfc="white",
                 mec=COLORS["rscs_mixture_pt"], mew=1.0, zorder=8)
-        ax.annotate(str(i), (x, y), textcoords="offset points", xytext=(4, 4),
-                    fontsize=FONTS["band_label"],
-                    color=COLORS["rscs_mixture_pt"], zorder=9)
+        keep_clear(ax, x, y, 3.5)
+        movable(ax.annotate(str(i), (x, y), textcoords="offset points",
+                            xytext=(4, 4), fontsize=_POINT_FONT,
+                            color=COLORS["rscs_mixture_pt"], zorder=9),
+                ring((4, 7, 10, 14, 18)), priority=2)
 
     n_left, n_bottom, n_right = (-0.866, 0.5), (0.0, -1.0), (0.866, 0.5)
     for i in range(1, 20):
@@ -120,14 +139,14 @@ def rscs_figure(sample: SoilSample, figsize=(8.4, 7.4)) -> Figure:
                 color=COLORS["spine"], lw=0.8, zorder=7)
         if major:
             ax.text(px + _LABEL_OFF * n_left[0], py + _LABEL_OFF * n_left[1],
-                    f"{v:.0f}", fontsize=FONTS["tick"], ha="center",
+                    f"{v:.0f}", fontsize=_TICK_FONT, ha="center",
                     va="center", color=COLORS["tick"], rotation=60)
 
         ax.plot([v, v], [0.0, tick_len * n_bottom[1]],
                 color=COLORS["spine"], lw=0.8, zorder=7)
         if major:
             ax.text(v, _LABEL_OFF * n_bottom[1], f"{v:.0f}",
-                    fontsize=FONTS["tick"], ha="center", va="center",
+                    fontsize=_TICK_FONT, ha="center", va="center",
                     color=COLORS["tick"])
 
         px, py = 100.0 - 0.5 * v, 100.0 * _SQ3_2 * v / 100.0
@@ -136,7 +155,7 @@ def rscs_figure(sample: SoilSample, figsize=(8.4, 7.4)) -> Figure:
                 color=COLORS["spine"], lw=0.8, zorder=7)
         if major:
             ax.text(px + _LABEL_OFF * n_right[0], py + _LABEL_OFF * n_right[1],
-                    f"{v:.0f}", fontsize=FONTS["tick"], ha="center",
+                    f"{v:.0f}", fontsize=_TICK_FONT, ha="center",
                     va="center", color=COLORS["tick"], rotation=-60)
 
     ax.text(9.0, 45.5, t("chart_rscs_gravel_axis"), fontsize=FONTS["axis_label"], fontweight="bold",
@@ -154,20 +173,23 @@ def rscs_figure(sample: SoilSample, figsize=(8.4, 7.4)) -> Figure:
         symbol = result.symbol if result.ok else ""
         ax.plot([sx], [sy], marker="*", ms=19, color=COLORS["sample"],
                 mec="white", mew=1.2, zorder=12)
-        ax.annotate(
-            f"{sample.name}\n"
+        keep_clear(ax, sx, sy, 9.0)
+        label = ax.annotate(
+            f"{wrap_label(sample.name)}\n"
             f"{t('chart_rscs_letter_gravel')} {fr.gravel:.0f} / "
             f"{t('chart_rscs_letter_sand')} {fr.sand:.0f} / "
             f"{t('chart_rscs_letter_fines')} {fr.fines:.0f} %"
             + (f"\n\u2192 {symbol}" if symbol else ""),
-            (sx, sy), xycoords="data", xytext=(0.17, 0.80),
-            textcoords="axes fraction", ha="center", va="center",
+            (sx, sy), xycoords="data", xytext=(-110, 90),
+            textcoords="offset points", ha="right", va="bottom",
             fontsize=FONTS["annotation"],
             fontweight="bold", color=COLORS["sample"], zorder=12,
+            linespacing=1.35, multialignment="left",
             arrowprops=dict(arrowstyle="-", color=COLORS["sample"], lw=1.0,
                             shrinkA=0, shrinkB=6),
             bbox=dict(boxstyle="round,pad=0.32", fc="white",
                       ec=COLORS["sample"], alpha=0.92, lw=0.9))
+        movable(label, FAR_AROUND, priority=1, region="figure")
 
     ax.legend(handles=[
         Line2D([0], [0], color=COLORS["rscs_mech_line"], lw=1.7,

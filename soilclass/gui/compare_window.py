@@ -242,11 +242,12 @@ class ComparisonWindow(tk.Toplevel):
         if not path:
             return
         from matplotlib.backends.backend_pdf import PdfPages
-        from ..report.pdf_report import PAGE_LANDSCAPE, _finalize_page
+        from ..report.pdf_report import (PAGE_LANDSCAPE, _finalize_page,
+                                         fit_chart_to_page)
         try:
             with PdfPages(path) as pdf:
                 for _label, fig in self._figures(figsize=PAGE_LANDSCAPE):
-                    fig.subplots_adjust(top=0.85)
+                    fit_chart_to_page(fig)
                     _finalize_page(fig, page=PAGE_LANDSCAPE)
                     pdf.savefig(fig)
                     plt.close(fig)

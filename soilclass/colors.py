@@ -231,15 +231,18 @@ CHART: Palette = {
 
 
 PDF_REPORT: Palette = {
-    "heading": "#1F5F8B",
-    "subheading": "#584F3D",
-    "table_header_bg": "#1F5F8B",
+    "accent": "#1F5F8B",
+    "accent_dark": "#163F5C",
+    "table_header_bg": "#4A87B0",
     "table_header_fg": "#FFFFFF",
-    "table_row_alt": "#F4EFE3",
-    "table_border": "#9A927E",
-    "symbol_fg": "#B02418",
-    "body_text": "#2B2B2B",
-    "footer_text": "#8A8474",
+    "ink": "#1F2A33",
+    "muted": "#57616D",
+    "micro": "#6B7684",
+    "border": "#D7DBE2",
+    "panel": "#EEF2F6",
+    "zebra": "#F6F8FA",
+    "note": "#EAF2F8",
+    "paper": "#FFFFFF",
 }
 
 

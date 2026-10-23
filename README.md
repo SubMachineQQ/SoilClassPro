@@ -33,7 +33,7 @@ USCS · BS 5930 · TS EN ISO 14688 · AASHTO · RSCS
 
 ## Neden SoilClass Pro?
 
-Aynı zemin numunesi farklı sınıflandırma sistemlerinde çoğu zaman farklı adlar alır: USCS'de *killi kum* olan bir zemin, AASHTO'da *A-2-6*, Revize Zemin Sınıflandırma Sistemi'nde ise davranışı ince danelerin kontrol ettiği bir *geçiş zemini* olarak tanımlanabilir. Bu sistemleri elle ve tek tek uygulamak hem zaman alır hem de hataya açıktır.
+Aynı zemin numunesi farklı sınıflandırma sistemlerinde çoğu zaman farklı adlar alır: USCS'de *killi kum* olan bir zemin, AASHTO'da *A-2-6*, Revize Zemin Sınıflandırma Sistemi'nde (Park ve Santamarina, 2017) ise davranışı ince danelerin kontrol ettiği bir *geçiş zemini* olarak tanımlanabilir. Bu sistemleri elle ve tek tek uygulamak hem zaman alır hem de hataya açıktır.
 
 **SoilClass Pro**, elek analizi ve kıvam limitlerinden oluşan **tek bir laboratuvar veri setiyle** zemini beş sisteme göre aynı anda sınıflandırır. Her sonucun hangi adımlardan geçilerek bulunduğunu gösterir, tüm grafikleri otomatik çizer ve sonuçları tek tıkla PDF rapora dönüştürür. Ücretsiz ve açık kaynaklıdır; Türkçe ve İngilizce kullanılabilir.
 
