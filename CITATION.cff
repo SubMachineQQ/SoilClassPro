@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "Bu yazılımı kullanırsanız lütfen aşağıdaki bildiriye atıf yapın. / If you use this software, please cite the paper below."
 title: "SoilClass Pro"
-version: 1.0.0
+version: 1.0.1
 date-released: 2026-10-22
 license: MIT
 repository-code: "https://github.com/batuhanbarisdoger/SoilClassPro"

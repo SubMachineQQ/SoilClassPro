@@ -1,5 +1,5 @@
 #define MyAppName "SoilClass Pro"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "Batuhan Baris Doger, Erol Boz, Furkan Kagan Ekici"
 #define MyAppExeName "SoilClassPro.exe"
 

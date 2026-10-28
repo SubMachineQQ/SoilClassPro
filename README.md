@@ -115,7 +115,7 @@ Türkçe ve İngilizce dil, açık ve koyu tema; her ekran çözünürlüğüne 
 
 ## Kurulum
 
-1. [Son sürüm sayfasından](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest) `SoilClassPro_Setup_1.0.0.exe` dosyasını indirin.
+1. [Son sürüm sayfasından](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest) `SoilClassPro_Setup_1.0.1.exe` dosyasını indirin.
 2. Dosyayı çalıştırın ve kurulum adımlarını izleyin.
 3. SoilClass Pro'yu Başlat menüsünden ya da masaüstü kısayolundan açın.
 
@@ -232,7 +232,7 @@ SoilClass Pro [MIT Lisansı](LICENSE) ile dağıtılır. Kaynak kodu serbestçe 
 - **Output:** PDF report, standard AGS4 data file and `.soilpro` project file.
 - Turkish and English interface, light and dark themes, adapts to any screen resolution and scaling.
 
-**Download:** get `SoilClassPro_Setup_1.0.0.exe` from the [releases page](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest). The installer is not code-signed yet, so Windows may show an "unknown publisher" warning; choose **More info → Run anyway**. The program tells you when a new version is available.
+**Download:** get `SoilClassPro_Setup_1.0.1.exe` from the [releases page](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest). The installer is not code-signed yet, so Windows may show an "unknown publisher" warning; choose **More info → Run anyway**. The program tells you when a new version is available.
 
 **System requirements:** 64-bit Windows 10 or 11; 4 GB RAM is plenty (the program uses about 120–220 MB); about 200 MB of free disk space; a 1366 × 768 or larger screen, with 100–200 % display scaling supported. No Python, Excel, administrator rights or internet connection are required (the internet is only used to check for new versions).
 
