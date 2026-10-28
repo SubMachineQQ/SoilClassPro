@@ -1,0 +1,117 @@
+name: Release
+
+# Version source: soilclass/version.py (__version__).
+# Push a tag named v<version> (for example v1.0.0) to build and publish a release.
+# The tag must match __version__, and installer/SoilClassPro.iss must use the same
+# version, otherwise the build fails before anything is published.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version and check it matches
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(sed -n 's/^__version__ = "\(.*\)"/\1/p' soilclass/version.py)
+          ISS_VERSION=$(sed -n 's/^#define MyAppVersion "\(.*\)"/\1/p' installer/SoilClassPro.iss)
+          echo "version.py: $VERSION"
+          echo "installer:  $ISS_VERSION"
+          if [ -z "$VERSION" ] || [ "$VERSION" != "$ISS_VERSION" ]; then
+            echo "::error::soilclass/version.py and installer/SoilClassPro.iss disagree"
+            exit 1
+          fi
+          if [ "${GITHUB_REF_TYPE}" = "tag" ] && [ "${GITHUB_REF_NAME}" != "v${VERSION}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match version v${VERSION}"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+  windows:
+    needs: check-version
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies and PyInstaller
+        run: |
+          python -m pip install --upgrade pip pyinstaller
+          python -m pip install --upgrade -r requirements.txt
+
+      - name: Build SoilClassPro.exe
+        run: python -m PyInstaller --noconfirm --clean SoilClassPro.spec
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\SoilClassPro.iss'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: installer_output/SoilClassPro_Setup_${{ needs.check-version.outputs.version }}.exe
+          if-no-files-found: error
+
+  macos:
+    needs: check-version
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build SoilClassPro.app
+        run: ./build_mac.sh
+
+      - name: Zip the app bundle
+        run: ditto -c -k --keepParent dist/SoilClassPro.app "SoilClassPro-macOS-${{ needs.check-version.outputs.version }}.zip"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-app
+          path: SoilClassPro-macOS-${{ needs.check-version.outputs.version }}.zip
+          if-no-files-found: error
+
+  release:
+    # Only tag pushes publish; workflow_dispatch just builds and keeps the artifacts.
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [check-version, windows, macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-files
+          merge-multiple: true
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" release-files/* \
+            --title "SoilClass Pro $TAG" \
+            --generate-notes
