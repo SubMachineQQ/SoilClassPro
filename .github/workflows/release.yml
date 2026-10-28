@@ -25,8 +25,8 @@ jobs:
         id: version
         shell: bash
         run: |
-          VERSION=$(sed -n 's/^__version__ = "\(.*\)"/\1/p' soilclass/version.py)
-          ISS_VERSION=$(sed -n 's/^#define MyAppVersion "\(.*\)"/\1/p' installer/SoilClassPro.iss)
+          VERSION=$(sed -n 's/^__version__ = "\([^"]*\)".*/\1/p' soilclass/version.py | tr -d '\r')
+          ISS_VERSION=$(sed -n 's/^#define MyAppVersion "\([^"]*\)".*/\1/p' installer/SoilClassPro.iss | tr -d '\r')
           echo "version.py: $VERSION"
           echo "installer:  $ISS_VERSION"
           if [ -z "$VERSION" ] || [ "$VERSION" != "$ISS_VERSION" ]; then
