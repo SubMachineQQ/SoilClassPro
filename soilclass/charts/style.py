@@ -1,5 +1,6 @@
 import matplotlib
 
+from ..fonts import UI_FONT
 from ..colors import CHART as COLORS
 from .declutter import AROUND_POINT, keep_clear, movable, wrap_label
 from ..i18n import t
@@ -19,7 +20,7 @@ FONTS = {
 }
 
 matplotlib.rcParams["font.family"] = "sans-serif"
-matplotlib.rcParams["font.sans-serif"] = ["Segoe UI", "DejaVu Sans"]
+matplotlib.rcParams["font.sans-serif"] = [UI_FONT, "DejaVu Sans"]
 matplotlib.rcParams["mathtext.fontset"] = "dejavusans"
 
 _SERIES_KEYS = [f"series_{i}" for i in range(1, 11)]

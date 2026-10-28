@@ -5,6 +5,7 @@ from tkinter import font as tkfont
 from tkinter import ttk
 from typing import List, Optional
 
+from ..fonts import UI_FONT, MONO_FONT
 from ..classifiers import ClassificationResult
 from ..i18n import t, upper
 from ..models import SoilSample, conventions_for_systems
@@ -26,7 +27,7 @@ class ResultsTab(ttk.Frame):
         self._build_hero()
 
         ttk.Label(self, text=t("results_classification_summary"),
-                  font=("Segoe UI", 13, "bold")).grid(row=1, column=0,
+                  font=(UI_FONT, 13, "bold")).grid(row=1, column=0,
                                                       sticky="w")
 
         cols = ("system", "symbol", "name")
@@ -42,14 +43,14 @@ class ResultsTab(ttk.Frame):
         self.tree.bind("<<TreeviewSelect>>", self._show_detail)
 
         ttk.Label(self, text=t("results_decision_trail"),
-                  font=("Segoe UI", 13, "bold")).grid(row=3, column=0,
+                  font=(UI_FONT, 13, "bold")).grid(row=3, column=0,
                                                       sticky="w")
         detail_box = ttk.Frame(self)
         detail_box.grid(row=4, column=0, sticky="nsew", pady=(4, 0))
         detail_box.columnconfigure(0, weight=1)
         detail_box.rowconfigure(0, weight=1)
         self.detail = tk.Text(detail_box, height=12, wrap="word",
-                              font=("Consolas", 12), relief="flat")
+                              font=(MONO_FONT, 12), relief="flat")
         detail_scroll = ttk.Scrollbar(detail_box, orient="vertical",
                                       command=self.detail.yview)
         self.detail.configure(yscrollcommand=detail_scroll.set)

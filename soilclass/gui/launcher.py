@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 import threading
 import tkinter as tk
 import webbrowser
@@ -7,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 
+from ..fonts import UI_FONT
 from .. import __app_name__, __version__, project_file, recent_projects, updates
 from ..colors import LAUNCHER, LAUNCHER_DARK
 from ..i18n import (LANGUAGES, get_language, set_language, t, title_words,
@@ -19,7 +21,7 @@ from .theme import get_dark_mode, set_dark_mode
 from .theme_toggle import ThemeToggle
 from .widgets import (MONO, UI, MetricCell, StatusPill, hairline,
                       micro_label)
-from .scaling import fit_window, px, work_area
+from .scaling import fit_window, px, tk_scaling, work_area
 
 
 def _apply_palette_globals(dark: bool) -> None:
@@ -90,6 +92,7 @@ _HOVER_PREVIEW_MS = 80
 class LauncherWindow(tk.Tk):
     def __init__(self):
         super().__init__()
+        tk_scaling(self)
         _apply_palette_globals(get_dark_mode())
         self.title(f"{__app_name__} v{__version__} \u2014 "
                   f"{t('launcher_window_title')}")
@@ -386,7 +389,8 @@ class LauncherWindow(tk.Tk):
         canvas.bind("<Configure>", _sync_panel_width)
 
         def _wheel(event):
-            canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+            step = event.delta if sys.platform == "darwin" else event.delta / 120
+            canvas.yview_scroll(int(-1 * step), "units")
         canvas.bind("<MouseWheel>", _wheel)
         canvas.bind("<Button-4>", lambda e: canvas.yview_scroll(-1, "units"))
         canvas.bind("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))
@@ -561,27 +565,27 @@ class LauncherWindow(tk.Tk):
         self._clear_panel()
         info = get_standard_info(std_key)
         tk.Label(self.panel, text=info["label"],
-                font=("Segoe UI", 19, "bold"), background=_PANEL_BG,
+                font=(UI_FONT, 19, "bold"), background=_PANEL_BG,
                 foreground=_PANEL_FG).pack(anchor="w", padx=28, pady=(28, 2))
         tk.Label(self.panel, text=info["standard"],
-                font=("Segoe UI", 12, "italic"), background=_PANEL_BG,
+                font=(UI_FONT, 12, "italic"), background=_PANEL_BG,
                 foreground=_PANEL_MUTED, wraplength=px(self, 480),
                 justify="left").pack(anchor="w", padx=28, pady=(0, 18))
 
         tk.Label(self.panel, text=t("launcher_required_tests"),
-                font=("Segoe UI", 13, "bold"), background=_PANEL_BG,
+                font=(UI_FONT, 13, "bold"), background=_PANEL_BG,
                 foreground=_PANEL_FG).pack(anchor="w", padx=28)
         for test_item in info["tests"]:
-            tk.Label(self.panel, text=f"\u2022  {test_item}", font=("Segoe UI", 12),
+            tk.Label(self.panel, text=f"\u2022  {test_item}", font=(UI_FONT, 12),
                     background=_PANEL_BG, foreground=_PANEL_FG,
                     wraplength=px(self, 480), justify="left").pack(
                     anchor="w", padx=40, pady=2)
 
         tk.Label(self.panel, text=t("launcher_required_inputs"),
-                font=("Segoe UI", 13, "bold"), background=_PANEL_BG,
+                font=(UI_FONT, 13, "bold"), background=_PANEL_BG,
                 foreground=_PANEL_FG).pack(anchor="w", padx=28, pady=(16, 0))
         for input_item in info["inputs"]:
-            tk.Label(self.panel, text=f"\u2022  {input_item}", font=("Segoe UI", 12),
+            tk.Label(self.panel, text=f"\u2022  {input_item}", font=(UI_FONT, 12),
                     background=_PANEL_BG, foreground=_PANEL_FG,
                     wraplength=px(self, 480), justify="left").pack(
                     anchor="w", padx=40, pady=2)
@@ -589,12 +593,12 @@ class LauncherWindow(tk.Tk):
         notes = info.get("notes")
         if notes:
             tk.Label(self.panel, text=t("launcher_worth_knowing"),
-                    font=("Segoe UI", 13, "bold"), background=_PANEL_BG,
+                    font=(UI_FONT, 13, "bold"), background=_PANEL_BG,
                     foreground=_PANEL_FG).pack(anchor="w", padx=28,
                                                pady=(16, 0))
             for n in notes:
                 tk.Label(self.panel, text=f"\u2022  {n}",
-                        font=("Segoe UI", 12, "italic"),
+                        font=(UI_FONT, 12, "italic"),
                         background=_PANEL_BG, foreground=_PANEL_MUTED,
                         wraplength=px(self, 480), justify="left").pack(
                         anchor="w", padx=40, pady=2)
@@ -604,7 +608,7 @@ class LauncherWindow(tk.Tk):
         self._clear_panel()
 
         back = tk.Label(self.panel, text="\u2190  " + t("launcher_back_to_projects"),
-                        font=("Segoe UI", 11, "bold"), background=_PANEL_BG,
+                        font=(UI_FONT, 11, "bold"), background=_PANEL_BG,
                         foreground=_ACCENT, cursor="hand2")
         back.pack(anchor="w", padx=28, pady=(20, 0))
         back.bind("<Button-1>", lambda _e: self._cancel_form())
@@ -613,7 +617,7 @@ class LauncherWindow(tk.Tk):
                  else MODE_TITLE.get(mode, mode))
         tk.Label(self.panel,
                 text=f"{t('launcher_new_project')} \u2014 {title}",
-                font=("Segoe UI", 17, "bold"), background=_PANEL_BG,
+                font=(UI_FONT, 17, "bold"), background=_PANEL_BG,
                 foreground=_PANEL_FG).pack(anchor="w", padx=28, pady=(10, 4))
         tk.Frame(self.panel, height=2, width=340,
                 background=_PANEL_DIVIDER).pack(anchor="w", padx=28, pady=(0, 18))
@@ -630,12 +634,12 @@ class LauncherWindow(tk.Tk):
         ]
         entry_vars = {}
         for row, (label, key) in enumerate(fields):
-            tk.Label(form, text=f"{label}:", font=("Segoe UI", 12, "bold"),
+            tk.Label(form, text=f"{label}:", font=(UI_FONT, 12, "bold"),
                     background=_PANEL_BG, foreground=_PANEL_FG,
                     anchor="w").grid(row=row, column=0, sticky="w",
                                      pady=6, padx=(0, 12))
             var = tk.StringVar()
-            entry = tk.Entry(form, textvariable=var, font=("Segoe UI", 12),
+            entry = tk.Entry(form, textvariable=var, font=(UI_FONT, 12),
                              width=34, relief="flat",
                              background=_FIELD_BG, foreground=_PANEL_FG,
                              highlightthickness=1,
@@ -646,12 +650,12 @@ class LauncherWindow(tk.Tk):
 
         tk.Label(self.panel,
                 text=t("launcher_sieve_note"),
-                font=("Segoe UI", 11, "italic"), background=_PANEL_BG,
+                font=(UI_FONT, 11, "italic"), background=_PANEL_BG,
                 foreground=_PANEL_MUTED).pack(anchor="w", padx=28,
                                               pady=(14, 18))
 
         create_btn = tk.Label(self.panel, text=f"  {t('launcher_create_project')}  ",
-                              font=("Segoe UI", 13, "bold"),
+                              font=(UI_FONT, 13, "bold"),
                               background=_CREATE_BG, foreground=_CREATE_FG,
                               cursor="hand2", padx=10, pady=8)
         create_btn.pack(anchor="w", padx=28)

@@ -11,6 +11,7 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
                                                NavigationToolbar2Tk)
 from matplotlib import pyplot as plt
 
+from ..fonts import UI_FONT
 from ..charts.declutter import declutter
 from ..colors import CHART
 from ..i18n import t
@@ -94,7 +95,7 @@ class ChartTab(ttk.Frame):
         self._clear()
         ttk.Label(self._chart_area, text=self.placeholder,
                  foreground=CHART["placeholder_text"],
-                  font=("Segoe UI", 13)).pack(expand=True)
+                  font=(UI_FONT, 13)).pack(expand=True)
 
     def draw(self, sample: SoilSample) -> None:
         self._sample = sample

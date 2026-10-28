@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 import tkinter as tk
 from datetime import datetime
 from tkinter import filedialog, messagebox, ttk
@@ -20,7 +21,7 @@ from .icon_utils import set_window_icon
 from .input_tab import InputTab
 from .modes import MODE_CHARTS, MODE_CLASSIFIERS, MODE_TITLE
 from .results_window import ResultsWindow
-from .scaling import fit_window, lock_min_to_content
+from .scaling import fit_window, lock_min_to_content, tk_scaling
 from .theme_toggle import ThemeToggle
 from .widgets import MONO
 
@@ -29,6 +30,7 @@ class SoilClassApp(tk.Tk):
     def __init__(self, mode: str = "ALL",
                 preset_sample: Optional[SoilSample] = None):
         super().__init__()
+        tk_scaling(self)
         self.mode = mode if mode in MODE_TITLE else "ALL"
         self.classifiers = MODE_CLASSIFIERS[self.mode]
         self.chart_defs = MODE_CHARTS[self.mode]
@@ -53,10 +55,11 @@ class SoilClassApp(tk.Tk):
         self._build_statusbar()
         self._build_main_area()
         self.protocol("WM_DELETE_WINDOW", self.close_requested)
-        self.bind_all("<Control-s>", lambda _e: self.save_project())
-        self.bind_all("<Control-S>", lambda _e: self.save_project_as())
-        self.bind_all("<Control-o>", lambda _e: self.open_project())
-        self.bind_all("<Control-z>", lambda _e: self._undo())
+        modifier = "Command" if sys.platform == "darwin" else "Control"
+        self.bind_all(f"<{modifier}-s>", lambda _e: self.save_project())
+        self.bind_all(f"<{modifier}-S>", lambda _e: self.save_project_as())
+        self.bind_all(f"<{modifier}-o>", lambda _e: self.open_project())
+        self.bind_all(f"<{modifier}-z>", lambda _e: self._undo())
 
         lock_min_to_content(self)
 

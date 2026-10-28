@@ -4,6 +4,7 @@ import sys
 import tkinter as tk
 from dataclasses import dataclass
 from typing import Callable, List, Optional, Union
+from ..fonts import UI_FONT
 
 if sys.platform == "win32":
     import ctypes
@@ -164,13 +165,13 @@ class DropdownMenu(tk.Toplevel):
         row.pack(fill="x")
 
         prefix = "✓  " if entry.checked else ""
-        lbl = tk.Label(row, text=f"{prefix}{entry.label}", font=("Segoe UI", 11),
+        lbl = tk.Label(row, text=f"{prefix}{entry.label}", font=(UI_FONT, 11),
                        anchor="w", background=base_bg, foreground=self._pal["fg"],
                        padx=12, pady=7)
         lbl.pack(side="left", fill="x", expand=True)
 
         right_text = "›" if entry.items else entry.accelerator
-        right = tk.Label(row, text=right_text, font=("Segoe UI", 9),
+        right = tk.Label(row, text=right_text, font=(UI_FONT, 9),
                          background=base_bg, foreground=self._pal["muted_fg"], padx=10)
         right.pack(side="right")
 

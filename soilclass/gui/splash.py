@@ -5,13 +5,14 @@ import time
 import tkinter as tk
 from typing import Optional
 
+from ..fonts import UI_FONT
 from .. import __app_name__, __version__, consent
 from ..about import ACKNOWLEDGED, AUTHORS, format_date
 from ..assets_path import LOGO_PNG
 from ..colors import SPLASH, SPLASH_DARK
 from ..i18n import t
 from .theme import get_dark_mode
-from .scaling import px, work_area
+from .scaling import px, tk_scaling, work_area
 
 
 def _apply_palette_globals(dark: bool) -> None:
@@ -57,6 +58,7 @@ class SplashScreen(tk.Tk):
         if duration_ms is None:
             duration_ms = splash_duration()
         super().__init__()
+        tk_scaling(self)
         _apply_palette_globals(get_dark_mode())
         self.overrideredirect(True)
         self.configure(background=_BORDER)
@@ -76,12 +78,12 @@ class SplashScreen(tk.Tk):
             tk.Label(content, image=self._logo_img,
                     background=_BG).pack(pady=(0, 16))
 
-        tk.Label(content, text=__app_name__, font=("Segoe UI", 26, "bold"),
+        tk.Label(content, text=__app_name__, font=(UI_FONT, 26, "bold"),
                 fg=_FG, background=_BG).pack()
         tk.Label(content,
                 text=f"{t('splash_version').format(version=__version__)}"
                      f"   ·   {format_date()}",
-                font=("Segoe UI", 13), fg=_MUTED,
+                font=(UI_FONT, 13), fg=_MUTED,
                 background=_BG).pack(pady=(4, 14))
 
         tk.Frame(content, height=1, width=180,
@@ -90,7 +92,7 @@ class SplashScreen(tk.Tk):
         tk.Label(content,
                 text="USCS  \u00b7  BS 5930  \u00b7  TS EN ISO 14688  \u00b7  "
                      "AASHTO  \u00b7  RSCS",
-                font=("Segoe UI", 12), fg=_MUTED,
+                font=(UI_FONT, 12), fg=_MUTED,
                 background=_BG).pack()
 
         tk.Frame(content, background=_BG).pack(fill="both", expand=True)
@@ -106,17 +108,17 @@ class SplashScreen(tk.Tk):
         self._track_width = track_width
 
         tk.Label(content, text=t("splash_thanks"),
-                font=("Segoe UI", 11, "italic"), fg=_FG,
+                font=(UI_FONT, 11, "italic"), fg=_FG,
                 background=_BG).pack(pady=(0, 2))
         tk.Label(content, text="  \u00b7  ".join(AUTHORS),
-                font=("Segoe UI", 10), fg=_MUTED,
+                font=(UI_FONT, 10), fg=_MUTED,
                 background=_BG).pack(pady=(0, 2))
         tk.Label(content, text=t("acknowledgement").format(name=ACKNOWLEDGED),
-                font=("Segoe UI", 9, "italic"), fg=_MUTED,
+                font=(UI_FONT, 9, "italic"), fg=_MUTED,
                 background=_BG).pack(pady=(0, 2))
         tk.Label(content,
                 text=t("splash_copyright"),
-                font=("Segoe UI", 11), fg=_MUTED,
+                font=(UI_FONT, 11), fg=_MUTED,
                 background=_BG).pack(pady=(0, 18))
 
         self._duration = max(duration_ms, 200)

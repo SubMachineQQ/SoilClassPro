@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from typing import List, Tuple
 
+from ..fonts import UI_FONT
 from ..example_data import example_sample
 from ..i18n import t
 from ..models import ASTM_SIZES, SoilSample
@@ -39,12 +40,12 @@ class InputTab(ttk.Frame):
         ctrl.grid(row=0, column=0, sticky="ew", pady=(0, 8))
         fields = ttk.Frame(ctrl)
         ttk.Label(fields, text=f"{t('input_sieve_size')} (mm):",
-                 font=("Segoe UI", 12, "bold")).pack(side="left")
+                 font=(UI_FONT, 12, "bold")).pack(side="left")
         self.size_var = tk.StringVar()
         e1 = ttk.Entry(fields, textvariable=self.size_var, width=10)
         e1.pack(side="left", padx=(6, 16))
         ttk.Label(fields, text=f"{t('input_cumulative_passing')} (%):",
-                 font=("Segoe UI", 12, "bold")).pack(side="left")
+                 font=(UI_FONT, 12, "bold")).pack(side="left")
         self.pass_var = tk.StringVar()
         e2 = ttk.Entry(fields, textvariable=self.pass_var, width=10)
         e2.pack(side="left", padx=(6, 16))
@@ -657,7 +658,7 @@ class RscsParametersDialog(tk.Toplevel):
         frame = ttk.Frame(self, padding=16)
         frame.pack(fill="both", expand=True)
         ttk.Label(frame, text="RSCS \u2014 Park & Santamarina (2017)",
-                  font=("Segoe UI", 13, "bold")).grid(
+                  font=(UI_FONT, 13, "bold")).grid(
             row=0, column=0, columnspan=8, sticky="w", pady=(0, 10))
         first = None
         for key, label, col, row in fields:
@@ -667,7 +668,7 @@ class RscsParametersDialog(tk.Toplevel):
             entry.grid(row=row + 1, column=col + 1, sticky="w", padx=(0, 6),
                        pady=4)
             first = first or entry
-        ttk.Label(frame, text=t("rscs_help_text"), font=("Segoe UI", 10),
+        ttk.Label(frame, text=t("rscs_help_text"), font=(UI_FONT, 10),
                   foreground=palette["muted_fg"], wraplength=px(self, 600),
                   justify="left").grid(row=5, column=0, columnspan=8,
                                        sticky="w", padx=8, pady=(12, 0))

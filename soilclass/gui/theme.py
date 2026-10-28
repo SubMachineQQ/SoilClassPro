@@ -5,6 +5,7 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import ttk
 
+from ..fonts import UI_FONT
 from ..colors import THEME_DARK as DARK
 from ..colors import THEME_LIGHT as LIGHT
 from ..colors import Palette
@@ -13,7 +14,7 @@ from .scaling import row_height
 __all__ = ["LIGHT", "DARK", "Palette", "apply_theme", "UI_FACE", "UI_BODY",
           "get_dark_mode", "set_dark_mode"]
 
-UI_FACE = "Segoe UI"
+UI_FACE = UI_FONT
 UI_BODY = 12
 
 STORE_DIR = Path.home() / ".soilclasspro"
@@ -102,7 +103,7 @@ def apply_theme(root: tk.Misc, dark: bool = False) -> Palette:
     style.configure("TLabelframe", background=pal["bg"],
                     bordercolor=pal["border"])
     style.configure("TLabelframe.Label", background=pal["bg"],
-                    foreground=pal["muted_fg"], font=("Segoe UI", 12, "bold"))
+                    foreground=pal["muted_fg"], font=(UI_FONT, 12, "bold"))
 
     style.configure("TCheckbutton", background=pal["bg"],
                     foreground=pal["fg"], font=(UI_FACE, UI_BODY))
@@ -116,13 +117,13 @@ def apply_theme(root: tk.Misc, dark: bool = False) -> Palette:
     style.map("TButton", background=[("active", pal["border"])])
 
     style.configure("Icon.TButton", padding=(6, 4),
-                    font=("Segoe UI", 13), background=pal["surface"],
+                    font=(UI_FONT, 13), background=pal["surface"],
                     foreground=pal["fg"], borderwidth=0, relief="flat")
     style.map("Icon.TButton",
               background=[("active", pal["bg"]), ("pressed", pal["bg"])])
 
     style.configure("Classify.TButton", padding=(18, 10),
-                    font=("Segoe UI", 14, "bold"),
+                    font=(UI_FONT, 14, "bold"),
                     background=pal["accent"], foreground=pal["on_accent_fg"],
                     borderwidth=0)
     style.map("Classify.TButton",
@@ -130,25 +131,25 @@ def apply_theme(root: tk.Misc, dark: bool = False) -> Palette:
                          ("pressed", pal["accent_dark"])])
 
     style.configure("Add.TButton", padding=(12, 6),
-                    font=("Segoe UI", 11, "bold"),
+                    font=(UI_FONT, 11, "bold"),
                     background=pal["add_bg"], foreground=pal["on_accent_fg"],
                     borderwidth=0)
     style.map("Add.TButton", background=[("active", pal["add_bg"])])
 
     style.configure("Remove.TButton", padding=(12, 6),
-                    font=("Segoe UI", 11, "bold"),
+                    font=(UI_FONT, 11, "bold"),
                     background=pal["remove_bg"],
                     foreground=pal["on_accent_fg"], borderwidth=0)
     style.map("Remove.TButton", background=[("active", pal["remove_bg"])])
 
     style.configure("Clear.TButton", padding=(12, 6),
-                    font=("Segoe UI", 11, "bold"),
+                    font=(UI_FONT, 11, "bold"),
                     background=pal["clear_bg"],
                     foreground=pal["on_accent_fg"], borderwidth=0)
     style.map("Clear.TButton", background=[("active", pal["clear_bg"])])
 
     style.configure("Toolbar.TButton", padding=(12, 6),
-                    font=("Segoe UI", 12, "bold"),
+                    font=(UI_FONT, 12, "bold"),
                     background=pal["surface"], foreground=pal["fg"],
                     bordercolor=pal["border"])
     style.map("Toolbar.TButton", background=[("active", pal["border"])])
@@ -189,7 +190,7 @@ def apply_theme(root: tk.Misc, dark: bool = False) -> Palette:
     style.configure("TNotebook.Tab", background=pal["tab_bg_inactive"],
                     foreground=pal["tab_fg_inactive"], padding=(14, 8),
                     bordercolor=pal["border"],
-                    font=("Segoe UI", 11, "bold"))
+                    font=(UI_FONT, 11, "bold"))
     style.map(
         "TNotebook.Tab",
         background=[("selected", pal["tab_bg_active"]),
@@ -200,7 +201,7 @@ def apply_theme(root: tk.Misc, dark: bool = False) -> Palette:
     )
 
     style.configure("Action.TButton", padding=(18, 8),
-                    font=("Segoe UI", 11, "bold"),
+                    font=(UI_FONT, 11, "bold"),
                     background=pal["action_bg"], foreground=pal["action_fg"],
                     bordercolor=pal["action_bg"], borderwidth=0,
                     focuscolor=pal["action_bg"], relief="flat")
@@ -220,7 +221,7 @@ def apply_theme(root: tk.Misc, dark: bool = False) -> Palette:
               foreground=[("selected", pal["select_fg"])])
     style.configure("Treeview.Heading", background=pal["tree_header"],
                     foreground=pal["tree_heading_fg"],
-                    bordercolor=pal["border"], font=("Segoe UI", 11, "bold"))
+                    bordercolor=pal["border"], font=(UI_FONT, 11, "bold"))
     style.map("Treeview.Heading", background=[("active", pal["accent_tint"])])
 
     style.configure("TScrollbar", background=pal["surface"],

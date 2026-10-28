@@ -24,6 +24,13 @@ def enable_dpi_awareness() -> None:
         pass
 
 
+def tk_scaling(root: tk.Misc) -> None:
+    # macOS Tk measures 72 px to the inch, Windows 96; match Windows point sizes.
+    if sys.platform == "darwin":
+        per_point = float(root.tk.call("tk", "scaling"))
+        root.tk.call("tk", "scaling", per_point * _BASE_DPI / 72.0)
+
+
 def factor(widget: tk.Misc) -> float:
     try:
         return max(1.0, float(widget.winfo_fpixels("1i")) / _BASE_DPI)

@@ -3,6 +3,7 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 
+from ..fonts import UI_FONT, MONO_FONT
 from .. import __app_name__
 from ..i18n import t
 from ..methods_text import method_sections
@@ -10,8 +11,8 @@ from .icon_utils import set_window_icon
 from .scaling import fit_window, px
 from .theme import LIGHT, Palette
 
-_FONT = "Segoe UI"
-_MONO = "Consolas"
+_FONT = UI_FONT
+_MONO = MONO_FONT
 
 
 def _table_lines(rows):

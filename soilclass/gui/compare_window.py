@@ -11,6 +11,7 @@ from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
                                                NavigationToolbar2Tk)
 
+from ..fonts import UI_FONT
 from .. import project_file
 from ..i18n import t
 from ..charts.gsd import BOUNDARY_SETS, DEFAULT_BOUNDARIES, gsd_multi_figure
@@ -117,7 +118,7 @@ class ComparisonWindow(tk.Toplevel):
         table_frame.rowconfigure(1, weight=1)
 
         ttk.Label(table_frame, text=t("compare_soils_in_comparison"),
-                  font=("Segoe UI", 12, "bold")).grid(row=0, column=0,
+                  font=(UI_FONT, 12, "bold")).grid(row=0, column=0,
                                                       sticky="w", pady=(6, 4))
         cols = ("name", "uscs", "bs", "iso", "aashto", "rscs", "source")
         self.tree = ttk.Treeview(table_frame, columns=cols, show="headings",

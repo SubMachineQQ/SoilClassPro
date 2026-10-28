@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 from typing import List, Optional
 
+from ..fonts import UI_FONT
 from ..i18n import t
 from ..importers.table_parser import ParsedData
 from ..importers.universal import method_label
@@ -32,7 +33,7 @@ class ImportReviewDialog(tk.Toplevel):
         frame.rowconfigure(4, weight=1)
 
         ttk.Label(frame, text=t("import_review_instructions"),
-                  font=("Segoe UI", 12, "bold"), wraplength=px(self, 520),
+                  font=(UI_FONT, 12, "bold"), wraplength=px(self, 520),
                   justify="left").grid(row=0, column=0, sticky="w")
 
         top = ttk.Frame(frame)
@@ -57,7 +58,7 @@ class ImportReviewDialog(tk.Toplevel):
 
         self._warn = tk.Text(frame, height=3, wrap="word",
                              background=pal["warn_bg"], foreground=pal["fg"],
-                             relief="flat", font=("Segoe UI", 11))
+                             relief="flat", font=(UI_FONT, 11))
         self._warn_row = 2
 
         cols = ("size", "passing")

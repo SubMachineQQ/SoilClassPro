@@ -7,6 +7,7 @@ from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 from typing import Optional
 
+from ..fonts import UI_FONT
 from ..assets_path import EXAMPLES_DIR, IMPORT_HELP_DIR
 from ..i18n import t
 from .icon_utils import set_window_icon
@@ -69,7 +70,7 @@ class ImportHelpDialog(tk.Toplevel):
         frame.rowconfigure(2, weight=1)
 
         ttk.Label(frame, text=t("import_help_title"),
-                  font=("Segoe UI", 15, "bold")).grid(
+                  font=(UI_FONT, 15, "bold")).grid(
             row=0, column=0, columnspan=2, sticky="w")
         self._intro = ttk.Label(frame, text=t("import_help_intro"),
                                 justify="left", foreground=pal["muted_fg"])
@@ -89,7 +90,7 @@ class ImportHelpDialog(tk.Toplevel):
         right.grid(row=2, column=1, sticky="nsew")
         right.columnconfigure(0, weight=1)
         right.rowconfigure(2, weight=1)
-        self._name = ttk.Label(right, font=("Segoe UI", 12, "bold"))
+        self._name = ttk.Label(right, font=(UI_FONT, 12, "bold"))
         self._name.grid(row=0, column=0, sticky="w")
         self._desc = ttk.Label(right, justify="left")
         self._desc.grid(row=1, column=0, sticky="ew", pady=(2, 10))
@@ -110,7 +111,7 @@ class ImportHelpDialog(tk.Toplevel):
         self._image_id = self._canvas.create_image(0, 0, anchor="nw")
 
         self._tips = ttk.Label(frame, text=t("import_help_tips"),
-                               justify="left", font=("Segoe UI", 10))
+                               justify="left", font=(UI_FONT, 10))
         self._tips.grid(row=3, column=0, columnspan=2, sticky="ew",
                         pady=(12, 0))
 

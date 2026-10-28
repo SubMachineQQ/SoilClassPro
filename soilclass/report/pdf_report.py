@@ -14,6 +14,7 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import FancyBboxPatch, Rectangle
 from matplotlib.transforms import Affine2D
 
+from ..fonts import UI_FONT
 from .. import __app_name__, __version__
 from ..assets_path import LOGO_PNG
 from ..charts import ALL_FIGURES, classifiable_chart_defs, gsd_figure
@@ -60,7 +61,7 @@ def _family(preferred: str, fallback: str) -> str:
         return fallback
 
 
-SANS = _family("Segoe UI", "DejaVu Sans")
+SANS = _family(UI_FONT, "DejaVu Sans")
 
 
 def _subtitle(classifiers) -> str:

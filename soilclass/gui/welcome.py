@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tkinter as tk
 
+from ..fonts import UI_FONT
 from .. import __app_name__, __version__
 from ..about import ACKNOWLEDGED, AUTHORS, format_date
 from ..assets_path import LOGO_PNG
@@ -11,7 +12,7 @@ from .icon_utils import set_window_icon
 from .theme import get_dark_mode
 from .scaling import px, work_area
 
-_FONT = "Segoe UI"
+_FONT = UI_FONT
 _LOGO_PX = 56
 _WIDTH = 790
 _WIDTHS = (790, 960, 1140)

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tkinter as tk
 
+from ..fonts import UI_FONT, MONO_FONT
 from ..i18n import t, upper
 
 __all__ = [
@@ -10,8 +11,8 @@ __all__ = [
     "hairline",
 ]
 
-MONO = "Consolas"
-UI = "Segoe UI"
+MONO = MONO_FONT
+UI = UI_FONT
 
 
 def micro_label(parent, text: str, *, bg: str, fg: str, **pack_kw):
