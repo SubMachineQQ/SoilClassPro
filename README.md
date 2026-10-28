@@ -10,13 +10,17 @@ USCS · BS 5930 · TS EN ISO 14688 · AASHTO · RSCS
 
 [![Sürüm](https://img.shields.io/github/v/release/batuhanbarisdoger/SoilClassPro?label=s%C3%BCr%C3%BCm&color=1F5F8B)](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest)
 [![İndirme](https://img.shields.io/github/downloads/batuhanbarisdoger/SoilClassPro/total?label=indirme&color=1F5F8B)](https://github.com/batuhanbarisdoger/SoilClassPro/releases)
-[![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-1F5F8B)](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest)
+[![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011%20%7C%20macOS-1F5F8B)](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest)
 [![Lisans](https://img.shields.io/badge/lisans-MIT-1F5F8B)](LICENSE)
 
 <br>
 
 <a href="https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest">
   <img src="https://img.shields.io/badge/Windows%20i%C3%A7in%20indir-1F5F8B?style=for-the-badge&logo=windows&logoColor=white" height="44" alt="Windows için indir">
+</a>
+&nbsp;
+<a href="https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest">
+  <img src="https://img.shields.io/badge/macOS%20i%C3%A7in%20indir-1F5F8B?style=for-the-badge&logo=apple&logoColor=white" height="44" alt="macOS için indir">
 </a>
 
 <br><br>
@@ -115,6 +119,8 @@ Türkçe ve İngilizce dil, açık ve koyu tema; her ekran çözünürlüğüne 
 
 ## Kurulum
 
+### Windows
+
 1. [Son sürüm sayfasından](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest) `SoilClassPro_Setup_1.0.1.exe` dosyasını indirin.
 2. Dosyayı çalıştırın ve kurulum adımlarını izleyin.
 3. SoilClass Pro'yu Başlat menüsünden ya da masaüstü kısayolundan açın.
@@ -123,11 +129,21 @@ Türkçe ve İngilizce dil, açık ve koyu tema; her ekran çözünürlüğüne 
 >
 > Kurulum dosyası henüz dijital olarak imzalanmadığı için Windows SmartScreen *"Bilinmeyen yayımcı"* uyarısı gösterebilir. **Ek bilgi → Yine de çalıştır** ile devam edebilirsiniz. Yeni bir sürüm yayımlandığında program açılışta sizi bilgilendirir.
 
+### macOS
+
+1. [Son sürüm sayfasından](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest) `SoilClassPro-macOS-1.0.1.zip` dosyasını indirin ve açın.
+2. `SoilClassPro.app` uygulamasını **Uygulamalar** klasörüne sürükleyin.
+3. İlk açılışta *"geliştirici doğrulanamadı"* uyarısı çıkarsa **Sistem Ayarları → Gizlilik ve Güvenlik** bölümüne gidin, aşağı kaydırıp SoilClass Pro için **Yine de Aç** düğmesine basın.
+
+> **ℹ️ Not**
+>
+> macOS sürümü Apple'ın kimlik doğrulaması olmadan dağıtılmaktadır; bu yüzden ilk açılışta Gatekeeper uyarısı görünebilir. Uygulama kendi kullanıcı hesabınıza kurulur ve yönetici yetkisi gerektirmez.
+
 ## Sistem gereksinimleri
 
 | Gereksinim | Ayrıntı |
 |---|---|
-| **İşletim sistemi** | Windows 10 veya Windows 11, 64 bit (x64) |
+| **İşletim sistemi** | Windows 10 veya Windows 11, 64 bit (x64); veya macOS (Apple Silicon, M1 ve sonrası işlemciler) |
 | **Bellek (RAM)** | 4 GB yeterlidir; program çalışırken yaklaşık 120–220 MB kullanır |
 | **Disk alanı** | Yaklaşık 200 MB boş alan (kurulum ~50 MB, çalışırken geçici dosyalar ~90 MB) |
 | **Ekran** | En az 1366 × 768 önerilir; %100–%200 ölçeklendirme ve yüksek çözünürlüklü ekranlar desteklenir |
@@ -137,7 +153,7 @@ Türkçe ve İngilizce dil, açık ve koyu tema; her ekran çözünürlüğüne 
 
 > **ℹ️ Not**
 >
-> Windows 7, 8 / 8.1 ve 32 bit Windows sürümleri desteklenmez. macOS ve Linux için şu an kurulum dosyası sunulmamaktadır.
+> Windows 7, 8 / 8.1 ve 32 bit Windows sürümleri desteklenmez. macOS sürümü Intel işlemcili Mac'lerde test edilmemiştir ve derlemesi yalnızca Apple Silicon için yapılmaktadır. Linux için şu an kurulum dosyası sunulmamaktadır.
 
 ## Excel ve CSV'den veri aktarma
 
@@ -224,7 +240,7 @@ SoilClass Pro [MIT Lisansı](LICENSE) ile dağıtılır. Kaynak kodu serbestçe 
 
 ## English
 
-**SoilClass Pro** is a free, open-source Windows application that classifies a soil from a single set of laboratory data (sieve analysis and Atterberg limits) according to **USCS (ASTM D2487)**, **BS 5930**, **TS EN ISO 14688**, **AASHTO M 145** and the **Revised Soil Classification System (RSCS, Park & Santamarina 2017)** at the same time.
+**SoilClass Pro** is a free, open-source Windows and macOS application that classifies a soil from a single set of laboratory data (sieve analysis and Atterberg limits) according to **USCS (ASTM D2487)**, **BS 5930**, **TS EN ISO 14688**, **AASHTO M 145** and the **Revised Soil Classification System (RSCS, Park & Santamarina 2017)** at the same time.
 
 - **Five systems, one input:** results side by side, with a decision trail that justifies every step.
 - **Charts:** grain-size distribution, plasticity charts for three standards, AASHTO LL–PI chart, RSCS triangle and fines sensitivity chart.
@@ -232,9 +248,9 @@ SoilClass Pro [MIT Lisansı](LICENSE) ile dağıtılır. Kaynak kodu serbestçe 
 - **Output:** PDF report, standard AGS4 data file and `.soilpro` project file.
 - Turkish and English interface, light and dark themes, adapts to any screen resolution and scaling.
 
-**Download:** get `SoilClassPro_Setup_1.0.1.exe` from the [releases page](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest). The installer is not code-signed yet, so Windows may show an "unknown publisher" warning; choose **More info → Run anyway**. The program tells you when a new version is available.
+**Download:** get `SoilClassPro_Setup_1.0.1.exe` (Windows) or `SoilClassPro-macOS-1.0.1.zip` (macOS) from the [releases page](https://github.com/batuhanbarisdoger/SoilClassPro/releases/latest). The installer is not code-signed yet, so Windows may show an "unknown publisher" warning; choose **More info → Run anyway**. On macOS, unzip the file, drag `SoilClassPro.app` to Applications and, if Gatekeeper blocks the first launch, open **System Settings → Privacy & Security** and click **Open Anyway**. The program tells you when a new version is available.
 
-**System requirements:** 64-bit Windows 10 or 11; 4 GB RAM is plenty (the program uses about 120–220 MB); about 200 MB of free disk space; a 1366 × 768 or larger screen, with 100–200 % display scaling supported. No Python, Excel, administrator rights or internet connection are required (the internet is only used to check for new versions).
+**System requirements:** 64-bit Windows 10 or 11, or macOS on Apple Silicon (M1 and later); 4 GB RAM is plenty (the program uses about 120–220 MB); about 200 MB of free disk space; a 1366 × 768 or larger screen, with 100–200 % display scaling supported. No Python, Excel, administrator rights or internet connection are required (the internet is only used to check for new versions).
 
 **Disclaimer:** SoilClass Pro is an auxiliary tool for education and research. Results depend solely on the data entered and on how the standards are implemented. Do not use them in design, construction or official reports without checking by a qualified engineer against the governing standards. The software is provided "as is" under the MIT License, without warranty of any kind; the developers accept no legal liability for any damage arising from its use or from an incorrect classification.
 
